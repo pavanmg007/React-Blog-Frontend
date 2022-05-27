@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Layout from "../components/Layout";
 import avatar from "../assests/face.png";
@@ -13,7 +13,9 @@ export default function SingleBlog() {
       ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
       : Math.sign(num) * Math.abs(num);
   }
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
   return (
     <Layout>
       <section className="container mx-auto md:w-1/2">
@@ -21,7 +23,7 @@ export default function SingleBlog() {
           <h1 className="text-xl font-mont mt-5 md:text-2xl lg:text-3xl">{title}</h1>
           <div className="md:flex flex-row-reverse md:w-full justify-between items-center">
             <div>
-              <ul className="flex w-1/3 md:w-20 lg:w-28 mt-2">
+              <ul className="flex w-1/3 md:w-20 lg:w-28 mt-2 cursor-pointer">
                 <li>
                   <img src="https://img.icons8.com/ios-filled/2x/facebook--v1.png" alt="" />
                 </li>
@@ -39,8 +41,10 @@ export default function SingleBlog() {
             <div className="flex items-center mt-5">
               <img className="w-16" src={avatar} alt="" />
               <div className="ml-5">
-                <h2 className="font-mont">Dmitry Npzhenkio</h2>
-                <h3 className="text-slate-400 mt-2">Jan 28, 2019 . 10 min read</h3>
+                <h2 className="font-mont">{author}</h2>
+                <h3 className="text-slate-400 mt-2">
+                  <Moment format="D MMM YYYY">{date}</Moment> / 10 min read
+                </h3>
               </div>
             </div>
           </div>
