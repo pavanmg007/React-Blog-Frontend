@@ -7,10 +7,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="https://pavanmg007.github.io/React-Blog-Frontend/home" element={<Homepage />} />
-        <Route path="https://pavanmg007.github.io/React-Blog-Frontend/" element={<Navigate replace to="https://pavanmg007.github.io/React-Blog-Frontend/home" />} />
-        <Route exact path="https://pavanmg007.github.io/React-Blog-Frontend/category/:categoryid" element={<Blog />} />
-        <Route exact path="https://pavanmg007.github.io/React-Blog-Frontend/category/:categoryid/article/:articleid" element={<SingleBlog />} />
+        <Route path="/home" element={<Homepage />} />
+        <Route path="/" element={<Navigate replace to="/home" />} />
+        <Route exact path="/category/:categoryid" element={<Blog />} />
+        <Route exact path="/category/:categoryid/article/:articleid" element={<SingleBlog />} />
       </Routes>
     </Router>
   );
