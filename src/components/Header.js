@@ -34,19 +34,19 @@ export default function Header() {
               <Link to="/">Home</Link>
             </li>
             <li className="py-2">
-              <Link to="/technology">Technology</Link>
+              <Link to="/category/technology">Technology</Link>
             </li>
             <li className="py-2">
-              <Link to="/hollywood">Hollywood</Link>
+              <Link to="/category/hollywood">Hollywood</Link>
             </li>
             <li className="py-2">
-              <Link to="/fitness">Fitness</Link>
+              <Link to="/category/fitness">Fitness</Link>
             </li>
             <li className="py-2">
-              <Link to="/food">Food</Link>
+              <Link to="/category/food">Food</Link>
             </li>
             <li className="py-2">
-              <Link to="/sandalwood">Sandalwood</Link>
+              <Link to="/category/sandalwood">Sandalwood</Link>
             </li>
           </ul>
         </nav>
