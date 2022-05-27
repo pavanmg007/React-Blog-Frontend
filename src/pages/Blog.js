@@ -8,20 +8,21 @@ export default function Blog() {
   const { categoryid } = useParams();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  async function getArticles() {
-    setLoading(true);
-    const response = await axios.get(
-      `https://mockend.com/pavanmg007/react-blog/posts?category_eq=${categoryid}`
-    );
-    if (response.status === 200) {
-      setData(response.data);
-      setLoading(false);
-    } else {
-      console.log("API error");
-      setLoading(true);
-    }
-  }
+
   useEffect(() => {
+    async function getArticles() {
+      setLoading(true);
+      const response = await axios.get(
+        `https://mockend.com/pavanmg007/react-blog/posts?category_eq=${categoryid}`
+      );
+      if (response.status === 200) {
+        setData(response.data);
+        setLoading(false);
+      } else {
+        console.log("API error");
+        setLoading(true);
+      }
+    }
     getArticles();
   }, [categoryid]);
 
