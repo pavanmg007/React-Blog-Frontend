@@ -150,7 +150,7 @@ export default function Blog() {
             </div>
           )}
           {!loading &&
-            data.slice(0, 3).map((e) => {
+            data.slice(0,3).map((e) => {
               return (
                 <article className="flex border-b py-10" key={e.id}>
                   <div className="flex w-2/3">
@@ -191,3 +191,9 @@ export default function Blog() {
     </Layout>
   );
 }
+
+// /*    /index.html   200
+// _redirects
+// .filter((article) => {
+//   return article.views >= categoryid;
+// })
