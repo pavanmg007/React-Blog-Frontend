@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useLocation, NavLink } from "react-router-dom";
 import Layout from "../components/Layout";
 import avatar from "../assests/face.png";
 import Moment from "react-moment";
@@ -7,7 +7,8 @@ import clap from "../assests/hand.jpg";
 
 export default function SingleBlog() {
   const location = useLocation();
-  const { title, cover, content, likes, date, category, author } = location.state;
+  const [loading, setLoading] = useState(false);
+  const { title, cover, content, likes, date, category, author, data } = location.state;
   function kFormatter(num) {
     return Math.abs(num) > 999
       ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
@@ -69,6 +70,85 @@ export default function SingleBlog() {
           </div>
         </article>
       </section>
+      <div className="container md:mx-auto md:mt-10 mb-10 md:mb-10">
+        <main className="container px-4">
+          <div>
+            <h1 className="font-mont font-medium text-2xl md:text-3xl mt-10 pb-4 border-orange-600 border-b-2 inline-block">
+              More Articles from {author}
+            </h1>
+          </div>
+
+          {loading && (
+            <div className="flex px-5 w-min mx-auto py-20 md:py-40">
+              <svg
+                className="animate-spin w-10 inline-block mr-5 text-red-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              <p className="inline-block text-3xl">Loading...</p>
+            </div>
+          )}
+          <div className="md:flex md:w-full md:justify-between md:gap-20">
+            {!loading &&
+              data
+                .filter((e) => {
+                  return e.author === author;
+                })
+                .slice(0, 3)
+                .map((e) => {
+                  return (
+                    <article className="flex md:flex-col py-5" key={e.id + Math.random()}>
+                      <div className="flex w-4/5 md:w-full">
+                        <img src={e.cover} className="rounded-md" alt="" loading="lazy" />
+                      </div>
+                      <div className="ml-5 md:ml-0 md:flex md:flex-col md:justify-between md:mt-5">
+                        <h1 className="font-mont font-medium text-xl md:text-2xl lg:text-3xl md:w-full">
+                          <NavLink
+                            state={{
+                              title: e.title,
+                              cover: e.cover,
+                              content: e.body,
+                              likes: e.likes,
+                              date: e.createdAt,
+                              category: e.category,
+                              author: e.author,
+                            }}
+                            to={`/article/${e.id}`}
+                          >
+                            {e.title}
+                          </NavLink>
+                        </h1>
+                        <div className="flex items-center mt-5">
+                          <img className="w-16" src={avatar} alt="" />
+                          <div className="ml-5">
+                            <h2 className="font-mont">{author}</h2>
+                            <h3 className="text-slate-400 mt-2">
+                              <Moment format="D MMM YYYY">{date}</Moment> / 10 min read
+                            </h3>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  );
+                })}
+          </div>
+        </main>
+      </div>
     </Layout>
   );
 }

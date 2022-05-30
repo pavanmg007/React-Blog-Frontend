@@ -104,6 +104,7 @@ export default function Blog() {
                             date: e.createdAt,
                             category: e.category,
                             author: e.author,
+                            data: data,
                           }}
                           to={`article/${e.id}`}
                         >
@@ -223,7 +224,7 @@ export default function Blog() {
                 </article>
               );
             })}
-          <div className="w-full border border-black flex items-center justify-center h-96">
+          <div className="w-full border border-black flex items-center justify-center h-1/4">
             <h1 className="text-2xl">Advertisment</h1>
           </div>
         </aside>
