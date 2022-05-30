@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import Layout from "../components/Layout";
 import avatar from "../assests/face.png";
@@ -7,7 +7,6 @@ import clap from "../assests/hand.jpg";
 
 export default function SingleBlog() {
   const location = useLocation();
-  const [loading, setLoading] = useState(false);
   const { title, cover, content, likes, date, category, author, data } = location.state;
   function kFormatter(num) {
     return Math.abs(num) > 999
@@ -78,34 +77,8 @@ export default function SingleBlog() {
             </h1>
           </div>
 
-          {loading && (
-            <div className="flex px-5 w-min mx-auto py-20 md:py-40">
-              <svg
-                className="animate-spin w-10 inline-block mr-5 text-red-500"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-              <p className="inline-block text-3xl">Loading...</p>
-            </div>
-          )}
           <div className="md:flex md:w-full md:justify-between md:gap-20">
-            {!loading &&
-              data
+            {data
                 .filter((e) => {
                   return e.author === author;
                 })
