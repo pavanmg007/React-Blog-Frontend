@@ -11,6 +11,7 @@ function App() {
         <Route path="/" element={<Navigate replace to="/home" />} />
         <Route exact path="/category/:categoryid" element={<Blog />} />
         <Route exact path="/category/:categoryid/article/:articleid" element={<SingleBlog />} />
+        <Route exact path="/article/:articleid" element={<SingleBlog />} />
       </Routes>
     </Router>
   );

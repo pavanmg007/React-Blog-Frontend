@@ -9,17 +9,33 @@ export default function Blog() {
   const { categoryid } = useParams();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadmore, setLoadMore] = useState(false);
   const [page, setPage] = useState(0);
 
   const loadMore = () => {
     setPage((page) => page + 1);
+    async function loadArticles() {
+      setLoadMore(true);
+      const response = await axios.get(
+        `https://mockend.com/pavanmg007/react-blog/posts?offset=${page}&limit=3&category_eq=${categoryid}`
+      );
+      if (response.status === 200) {
+        setData((data) => [...response.data, ...data]);
+        // setData(response.data);
+        setLoadMore(false);
+      } else {
+        console.log("API error");
+        setLoadMore(true);
+      }
+    }
+    loadArticles();
   };
 
   useEffect(() => {
     async function getArticles() {
       setLoading(true);
       const response = await axios.get(
-        `https://mockend.com/pavanmg007/react-blog/posts?offset=${page}&limit=3&category_eq=${categoryid}`
+        `https://mockend.com/pavanmg007/react-blog/posts?offset=1&limit=3&category_eq=${categoryid}`
       );
       if (response.status === 200) {
         setData((data) => [...response.data, ...data]);
@@ -31,8 +47,7 @@ export default function Blog() {
       }
     }
     getArticles();
-  }, [categoryid, page]);
-  console.log(data);
+  }, [categoryid]);
   return (
     <Layout>
       <div className="md:flex container md:mx-auto md:mt-10 mb-10 md:mb-40">
@@ -111,7 +126,32 @@ export default function Blog() {
                   </article>
                 );
               })}
-          {!loading && (
+          {loadmore && (
+            <div className="flex px-5 w-min mx-auto py-20 md:py-40">
+              <svg
+                className="animate-spin w-10 inline-block mr-5 text-red-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              <p className="inline-block text-3xl">Loading...</p>
+            </div>
+          )}
+          {!loadmore && (
             <div className="flex mt-5">
               <img className="inline-block mr-4" src={arrow} alt="" />
               <button onClick={loadMore} className="uppercase inline-block text-slate-400">
@@ -150,7 +190,7 @@ export default function Blog() {
             </div>
           )}
           {!loading &&
-            data.slice(0,3).map((e) => {
+            data.slice(0, 3).map((e) => {
               return (
                 <article className="flex border-b py-10" key={e.id}>
                   <div className="flex w-2/3">
